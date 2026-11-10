@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diário de Arquitetura</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f2ea;--card:#fffdf8;--ink:#23201c;--mute:#7a7167;--line:#e3dccf;--acc:#b5532f;--acc2:#f1ddd0;--grid:rgba(35,32,28,.06);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16140f;--card:#1f1c16;--ink:#f1ebe0;--mute:#a39a8c;--line:#332f26;--acc:#e0845a;--acc2:#35241b;--grid:rgba(241,235,224,.05);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#16140f;--card:#1f1c16;--ink:#f1ebe0;--mute:#a39a8c;--line:#332f26;--acc:#e0845a;--acc2:#35241b;--grid:rgba(241,235,224,.05);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif}
+.hero{background:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;border-bottom:1px solid var(--line);padding:72px 20px 48px}
+.w{max-width:820px;margin:0 auto}
+.tag{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);font-weight:600;border:1px solid var(--acc);padding:4px 12px;border-radius:99px}
+h1{font:700 clamp(40px,8vw,72px)/1.02 Fraunces,Georgia,serif;margin:18px 0 12px;letter-spacing:-.02em}
+h1 em{color:var(--acc);font-style:normal}
+.sub{color:var(--mute);max-width:520px;margin:0 0 28px;font-size:18px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;outline:none}
+input:focus,textarea:focus{border-color:var(--acc)}
+#q{flex:1;min-width:200px;width:auto}
+.btn{font:600 14px Inter,sans-serif;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:11px 18px;border-radius:12px;cursor:pointer}
+.btn:hover{border-color:var(--acc)}
+.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+.stat{color:var(--mute);font-size:14px;margin-top:18px}
+main{padding:40px 20px 80px}
+.tl{position:relative;padding-left:28px;border-left:2px solid var(--line);margin-left:8px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 26px;margin-bottom:22px}
+.card:before{content:"";position:absolute;left:-39px;top:30px;width:14px;height:14px;border-radius:50%;background:var(--acc);border:3px solid var(--bg)}
+.les{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:600}
+.date{color:var(--mute);font-size:12px;margin-left:8px;text-transform:none;letter-spacing:0;font-weight:400}
+h2{font:700 26px/1.2 Fraunces,Georgia,serif;margin:6px 0 10px}
+.card p{margin:0;white-space:pre-line}
+.com{margin-top:16px;background:var(--acc2);border-left:3px solid var(--acc);border-radius:4px 12px 12px 4px;padding:12px 16px;font-size:15px}
+.com b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:2px}
+.act{margin-top:14px;display:flex;gap:8px}
+.act .btn{padding:6px 12px;font-size:12px}
+.empty{color:var(--mute);text-align:center;padding:40px 0}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-start;justify-content:center;padding:max(20px,env(safe-area-inset-top,0px)) 16px 20px;overflow:auto;z-index:20}
+.mod{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:26px;width:100%;max-width:560px}
+.mod h3{font:700 24px Fraunces,Georgia,serif;margin:0 0 16px}
+.mod label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
+.row{display:grid;grid-template-columns:1fr 2fr;gap:12px}
+.mod .bar{justify-content:flex-end;margin-top:22px}
+footer{text-align:center;color:var(--mute);font-size:13px;padding:0 20px 40px}
+@media(max-width:520px){.row{grid-template-columns:1fr}.card{padding:20px}}
+
+.lk{background:none;border:0;color:var(--mute);font:inherit;cursor:pointer;text-decoration:underline}
+.err{color:#c0392b;font-size:13px;margin-top:8px;min-height:18px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+let E=[],q='',newest=true,pw=null,ed=null;
+const $=s=>document.querySelector(s);
+const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function load(){
+  try{const r=await fetch('/api/entries',{cache:'no-store'});if(r.ok){const d=await r.json();if(d&&d.entries){E=d.entries;return}}}catch(e){}
+  try{const r=await fetch('data/entries.json');E=(await r.json()).entries||[]}catch(e){}
+}
+load().then(render);
+function render(){
+  const k=q.trim().toLowerCase();
+  let list=E.map((e,i)=>({e,i})).filter(({e})=>!k||((e.lesson||'')+(e.title||'')+(e.summary||'')+(e.comment||'')).toLowerCase().includes(k));
+  if(newest)list.reverse();
+  $('#app').innerHTML=`
+  <header class="hero"><div class="w">
+    <span class="tag">Arquitetura</span>
+    <h1>Diário de <em>aulas</em></h1>
+    <p class="sub">Resumos, lições e reflexões pessoais ao longo da disciplina.</p>
+    <div class="bar">
+      <input id="q" placeholder="Pesquisar nos resumos…" value="${esc(q)}" oninput="q=this.value;render();const i=document.getElementById('q');i.focus();i.setSelectionRange(99,99)">
+      <button class="btn" onclick="newest=!newest;render()">${newest?'Mais recentes primeiro':'Mais antigos primeiro'}</button>
+      ${pw?'<button class="btn pri" onclick="openForm()">+ Novo resumo</button>':''}
+    </div>
+    <div class="stat">${E.length} registos publicados</div>
+  </div></header>
+  <main><div class="w"><div class="tl">
+    ${list.map(({e,i})=>card(e,i)).join('')||'<div class="empty">Nenhum resumo encontrado.</div>'}
+  </div></div></main>
+  <footer>Diário de Arquitetura · ${pw?'<button class="lk" onclick="pw=null;render()">Sair</button>':'<button class="lk" onclick="login()">Área privada</button>'}</footer>`;
+}
+function card(e,i){
+  const d=e.date?`<span class="date">· ${new Date(e.date).toLocaleDateString('pt-PT',{day:'numeric',month:'long',year:'numeric'})}</span>`:'';
+  return `<article class="card"><div class="les">${esc(e.lesson)}${d}</div><h2>${esc(e.title)}</h2><p>${esc(e.summary)}</p>
+  ${e.comment?`<div class="com"><b>Comentário pessoal</b>${esc(e.comment)}</div>`:''}
+  ${pw?`<div class="act"><button class="btn" onclick="openForm(${i})">Editar</button><button class="btn" onclick="del(${i})">Apagar</button></div>`:''}</article>`;
+}
+function modal(h){const o=document.createElement('div');o.className='ov';o.id='ov';o.innerHTML='<div class="mod">'+h+'</div>';$('#app').appendChild(o)}
+function login(){
+  modal(`<h3>Área privada</h3><label>Palavra-passe</label><input id="pw" type="password" onkeydown="if(event.key==='Enter')doLogin()"><div class="err" id="err"></div>
+  <div class="bar"><button class="btn" onclick="$('#ov').remove()">Cancelar</button><button class="btn pri" onclick="doLogin()">Entrar</button></div>`);
+  $('#pw').focus();
+}
+async function doLogin(){
+  const p=$('#pw').value;
+  try{const r=await fetch('/api/entries',{method:'POST',body:JSON.stringify({password:p,check:true})});
+    if(r.ok){pw=p;render()}else $('#err').textContent=r.status===401?'Palavra-passe errada.':'Erro: '+(await r.text())}
+  catch(e){$('#err').textContent='Sem ligação ao servidor.'}
+}
+function openForm(i){
+  ed=i==null?null:i;
+  const e=ed==null?{lesson:'',title:'',summary:'',comment:''}:E[ed];
+  modal(`<h3>${ed==null?'Novo resumo':'Editar resumo'}</h3>
+  <div class="row"><div><label>Lição</label><input id="f1" placeholder="Lição 28" value="${esc(e.lesson)}"></div>
+  <div><label>Título</label><input id="f2" placeholder="Tarefa 8" value="${esc(e.title)}"></div></div>
+  <label>Resumo da aula</label><textarea id="f3" rows="5">${esc(e.summary)}</textarea>
+  <label>Comentário pessoal</label><textarea id="f4" rows="3">${esc(e.comment)}</textarea>
+  <div class="bar"><button class="btn" onclick="$('#ov').remove()">Cancelar</button><button class="btn pri" onclick="submitForm()">Publicar</button></div>`);
+}
+async function submitForm(){
+  const v=i=>$('#f'+i).value.trim();
+  if(!v(1)||!v(3)){alert('Preenche pelo menos a lição e o resumo.');return}
+  if(ed!=null)Object.assign(E[ed],{lesson:v(1),title:v(2),summary:v(3),comment:v(4)});
+  else E.push({lesson:v(1),title:v(2),summary:v(3),comment:v(4),date:new Date().toISOString()});
+  await save();
+}
+async function del(i){if(!confirm('Apagar este resumo?'))return;E.splice(i,1);await save()}
+async function save(){
+  try{const r=await fetch('/api/entries',{method:'POST',body:JSON.stringify({password:pw,entries:E})});
+    if(!r.ok){alert('Não foi possível guardar ('+r.status+').');return}}
+  catch(e){alert('Sem ligação ao servidor.');return}
+  render();
+}
+</script>
+</body>
+</html>
